@@ -1,2 +1,19 @@
 # Python Virtual Environment
 ENV/
+
+# IDE's
+.vscode/
+
+# pycache
+
+software_for_schools/__pycache__/
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+# db
+db.sqlite3
