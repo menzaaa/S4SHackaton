@@ -1,6 +1,6 @@
 # Python Virtual Environment
 ENV/
-
+venv/
 # IDE's
 .vscode/
 
