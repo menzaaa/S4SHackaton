@@ -1,1 +1,0 @@
-DB_URI='mysql+pymysql://root:mysql@localhost/hackathon'

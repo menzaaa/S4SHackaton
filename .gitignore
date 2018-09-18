@@ -1,4 +1,7 @@
+settings.py
+
 venv/
+.vscode
 
 *.pyc
 __pycache__/
