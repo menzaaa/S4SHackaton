@@ -11,10 +11,14 @@ session = scoped_session(Session)
 
 def seed():
     userlist = [
-        User(name='max', password='password'),
-        User(name='menno', password='pw'),
-        User(name='robbert', password='robbert is met dubbel b')
+        User(username='max'),
+        User(username='menno'),
+        User(username='robbert')
     ]
+
+    for user in userlist:
+        user.hash_password('qwerty')
+    
     questionlist = [
         Question(question='when did 9/11 happen?', answer='last year'),
         Question(question='is git a programming language?', answer='yes definitly')
