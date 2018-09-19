@@ -6,7 +6,7 @@ from flask_restful import Resource, reqparse, fields, marshal_with, abort
 
 user_fields = {
     'id': fields.Integer,
-    'name': fields.String,
+    'username': fields.String,
     'password': fields.String,
     'uri': fields.Url('user', absolute=True),
 }
@@ -44,12 +44,12 @@ class UserResource(Resource):
     def put(self, id):
         parsed_args = parser.parse_args()
         user = session.query(User).filter(User.id == id).first()
-        user.password = parsed_args['password']
+        user.hash_password(parsed_args['password'])
         session.add(User)
         session.commit()
 
         return user, 201
-
+    
         # users[id] = request.form['data']
         # return {id: users[id]}
 
@@ -62,7 +62,8 @@ class UserListResource(Resource):
     @marshal_with(user_fields)
     def post(self):
         parsed_args = parser.parse_args()
-        user = User(name=parsed_args['name'], password=parsed_args['password'])
+        user = User(username=parsed_args['username'])
+        user.hash_password(parsed_args['password'])
         session.add(user)
         session.commit()
         return user, 201
