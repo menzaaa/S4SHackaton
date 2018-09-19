@@ -1,18 +1,20 @@
-from models import User
+from models import User, Answer
 from db import session
 
 from flask import Flask, request
-from flask_restful import Resource
-from flask_restful import reqparse
-from flask_restful import fields
-from flask_restful import marshal_with
-from flask_restful import abort
+from flask_restful import Resource, reqparse, fields, marshal_with, abort
 
 user_fields = {
     'id': fields.Integer,
     'name': fields.String,
     'password': fields.String,
     'uri': fields.Url('user', absolute=True),
+}
+
+answer_fields = {
+    'id': fields.Integer,
+    'answer': fields.String,
+    'user_id': fields.Integer
 }
 
 users = {}
@@ -64,3 +66,11 @@ class UserListResource(Resource):
         session.add(user)
         session.commit()
         return user, 201
+
+class UserAnswersResource(Resource):
+    @marshal_with(answer_fields)
+    def get(self, id):
+        user_id = session.query(User).get(id)
+        answers = session.query(Answer).filter(Answer.user_id == id).all()
+        return answers
+        

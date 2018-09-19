@@ -1,16 +1,44 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-Base = declarative_base()
+app = Flask(__name__)
+db = SQLAlchemy(app)
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(255))
-    password = Column(String(255))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    password = db.Column(db.String(255))
+
+class Question(db.Model):
+    __tablename__ = 'questions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(255))
+    answer = db.Column(db.String(255))
+
+class Answer(db.Model):
+    __tablename__ = 'answers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(255))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+
+class Quiz(db.Model):
+    __tablename__ = 'quizzes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+class Quiz_questions(db.Model):
+    __tablename__ = 'quiz_questions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    quiz_id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.Integer)
 
 
 if __name__ == "__main__":
@@ -19,3 +47,4 @@ if __name__ == "__main__":
     engine = create_engine(DB_URI)
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
+    
