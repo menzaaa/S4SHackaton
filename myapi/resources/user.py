@@ -8,6 +8,8 @@ from flask_restful import fields
 from flask_restful import marshal_with
 from flask_restful import abort
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 user_fields = {
     'id': fields.Integer,
     'name': fields.String,
@@ -21,6 +23,13 @@ parser = reqparse.RequestParser()
 parser.add_argument('task', type=str)
 
 class UserResource(Resource):
+    
+    def hash_password(self, password):
+        self.password_hash = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
+    
     @marshal_with(user_fields)
     def get(self, id):
         user = session.query(User).filter(User.id == id).first()
