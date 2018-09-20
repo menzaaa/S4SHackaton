@@ -20,8 +20,14 @@ user_fields = {
 
 answer_fields = {
     'id': fields.Integer,
-    'answer': fields.String,
+    'input': fields.String,
     'user_id': fields.Integer
+}
+
+user_answers = {
+    'id': fields.Integer,
+    'username': fields.String,
+    'answers': fields.List(fields.Nested(answer_fields))
 }
 
 users = {}
@@ -88,9 +94,15 @@ class UserListResource(Resource):
         return user, 201
 
 class UserAnswersResource(Resource):
-    @marshal_with(answer_fields)
+    @marshal_with(user_answers)
     def get(self, id):
-        user_id = session.query(User).get(id)
+        user = session.query(User).get(id)
         answers = session.query(Answer).filter(Answer.user_id == id).all()
-        return answers
+
+        d = dict()
+        d['id'] = user.id
+        d['name'] = user.username
+        d['answers'] = answers        
+
+        return d
         
