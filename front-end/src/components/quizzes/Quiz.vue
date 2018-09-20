@@ -1,10 +1,10 @@
 <template>
-    <div class="quiz">
+    <div v-if="quiz" class="quiz">
         <div class="loading" v-if="loading">
             Loading...
         </div>
         <h2>{{ quiz.name }}</h2>
-        <table v-if="quiz" class="table">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>

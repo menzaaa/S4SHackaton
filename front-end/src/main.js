@@ -13,6 +13,7 @@ import NavigationBar from './components/layout/NavigationBar.vue'
 import Quizzes from './components/quizzes/Quizzes.vue'
 import Quiz from './components/quizzes/Quiz.vue'
 import CreateQuiz from './components/quizzes/Create.vue'
+import EditQuiz from './components/quizzes/Edit.vue'
 import Question from './components/questions/Questions.vue';
 
 Vue.use(VueRouter)
@@ -57,19 +58,27 @@ const routes = [
     }
   },
   {
-    path: '/quizzes/:id',
-    name: 'quiz',
-    components: {
-      navigation: NavigationBar,
-      main: Quiz
-    }
-  },
-  {
     path: '/quizzes/create',
     name: 'quiz.create',
     components: {
       navigation: NavigationBar,
       main: CreateQuiz
+    }
+  },
+  {
+    path: '/quizzes/:id/edit',
+    name: 'quiz.edit',
+    components: {
+      navigation: NavigationBar,
+      main: EditQuiz
+    }
+  },
+  {
+    path: '/quizzes/:id',
+    name: 'quiz',
+    components: {
+      navigation: NavigationBar,
+      main: Quiz
     }
   },
   {

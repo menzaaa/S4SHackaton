@@ -11,6 +11,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Creator</th>
                     <th scope="col">Attend</th>
+                    <th scope="col">Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                     <td>{{ quiz.name }}</td>
                     <td>{{ quiz.user.first_name }} {{ quiz.user.last_name }}</td>
                     <td><router-link :to="{ name: 'quiz', params: { id: quiz.id}}">Here</router-link></td>
+                    <td><router-link :to="{ name: 'quiz.edit', params: { id: quiz.id}}">Here</router-link></td>
                 </tr>
             </tbody>
         </table>
