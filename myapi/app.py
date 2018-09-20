@@ -4,7 +4,8 @@ from flask_httpauth import HTTPBasicAuth
 
 from resources.user import UserResource, UserListResource, UserAnswersResource
 from resources.question import QuestionResource, QuestionListResource, QuestionAnswersResource
-from resources.quiz import QuizOverviewResource, QuizListResource
+
+from resources.quiz import QuizResource, QuizOverviewResource, QuizListResource
 from resources.login import LoginResource
 from resources import auth
 
@@ -24,7 +25,8 @@ api.add_resource(QuestionResource, '/questions/<string:id>', endpoint='question'
 api.add_resource(QuestionListResource, '/questions', endpoint='questions')
 api.add_resource(QuestionAnswersResource, '/questions/<string:id>/answers', endpoint='question endpo_answers')
 
-api.add_resource(QuizOverviewResource, '/quizzes/<string:id>', endpoint='quiz')
+api.add_resource(QuizResource, '/quizzes/<string:id>', endpoint='quiz')
+api.add_resource(QuizOverviewResource, '/quizzes/<string:id>/questions', endpoint='quizquestions')
 api.add_resource(QuizListResource, '/quizzes', endpoint = 'quizzes')
 
 if __name__ == '__main__':

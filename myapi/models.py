@@ -59,8 +59,8 @@ class Answer(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     answer = db.Column(db.String(255))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE", onupdate="CASCADE"))
+    question_id = db.Column(db.Integer, db.ForeignKey('questions.id', ondelete="CASCADE", onupdate="CASCADE"))
 
 class Quiz(db.Model):
     __tablename__ = 'quizzes'
