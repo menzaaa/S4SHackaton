@@ -6,7 +6,8 @@ from flask_restful import Resource, reqparse, fields, marshal_with, abort
 
 question_fields = {
     'id': fields.Integer,
-    'question': fields.String,
+    'name': fields.String,
+    'description': fields.String,
     'answer': fields.String
 }
 
