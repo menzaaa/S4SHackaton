@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_httpauth import HTTPBasicAuth
+from flask_cors import CORS
 
 from resources.user import UserResource, UserListResource, UserAnswersResource
 from resources.question import QuestionResource, QuestionListResource, QuestionAnswersResource
