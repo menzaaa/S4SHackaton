@@ -4,12 +4,12 @@ from flask_httpauth import HTTPBasicAuth
 
 from resources.user import UserResource, UserListResource, UserAnswersResource
 from resources.question import QuestionResource, QuestionListResource, QuestionAnswersResource
-
 from resources.quiz import QuizResource, QuizOverviewResource, QuizListResource
 from resources.login import LoginResource
 from resources import auth
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['SECRET_KEY'] = 'geheime code'
 
