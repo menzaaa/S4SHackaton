@@ -19,7 +19,8 @@ answer_fields = {
 questions = {}
 
 parser = reqparse.RequestParser()
-parser.add_argument('task', type=str)
+parser.add_argument('question', type=str)
+parser.add_argument('answer', type=str)
 
 class QuestionResource(Resource):
     @marshal_with(question_fields)
@@ -29,12 +30,38 @@ class QuestionResource(Resource):
             abort(404, message="Question {} does not exist.".format(id))
         return question
 
+    @marshal_with(question_fields)
+    def put(self, id):
+        question = session.query(Question).filter(Question.id == id).first()
+        if question is not None:
+            parsed_args = parser.parse_args()
+            for key, value in parsed_args.items():
+                if parsed_args[key] is not None:
+                    setattr(question, key, value)
+            session.commit()
+            return question
+        return {"error": "User not found"}, 404
+
+    def delete(self, id):
+        question = session.query(Question).filter(Question.id == id).first()
+        session.delete(question)
+        session.commit()
+
 
 class QuestionListResource(Resource):
     @marshal_with(question_fields)
     def get(self):
         questions = session.query(Question).all()
         return questions
+
+    @marshal_with(question_fields)
+    def post(self):
+        parsed_args = parser.parse_args()
+        question = Question(question=parsed_args['question'], answer=parsed_args['answer'])
+        
+        session.add(question)
+        session.commit()
+        return question, 201
 
 
 class QuestionAnswersResource(Resource):
