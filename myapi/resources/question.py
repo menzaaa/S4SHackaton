@@ -7,19 +7,21 @@ from flask_restful import Resource, reqparse, fields, marshal_with, abort
 question_fields = {
     'id': fields.Integer,
     'question': fields.String,
+    'description': fields.String,
     'answer': fields.String
 }
 
 answer_fields = {
     'id': fields.Integer,
-    'answer': fields.String,
+    'input': fields.String,
     'user_id': fields.Integer
 }
 
 questions = {}
 
 parser = reqparse.RequestParser()
-parser.add_argument('question', type=str)
+parser.add_argument('name', type=str)
+parser.add_argument('description', type=str)
 parser.add_argument('answer', type=str)
 
 class QuestionResource(Resource):

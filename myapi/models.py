@@ -51,14 +51,15 @@ class Question(db.Model):
     __tablename__ = 'questions'
 
     id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(255))
+    name = db.Column(db.String(255))
+    description = db.Column(db.String(255))
     answer = db.Column(db.String(255))
 
 class Answer(db.Model):
     __tablename__ = 'answers'
 
     id = db.Column(db.Integer, primary_key=True)
-    answer = db.Column(db.String(255))
+    input = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE", onupdate="CASCADE"))
     question_id = db.Column(db.Integer, db.ForeignKey('questions.id', ondelete="CASCADE", onupdate="CASCADE"))
 

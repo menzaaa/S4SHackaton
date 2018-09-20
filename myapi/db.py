@@ -12,45 +12,36 @@ session = scoped_session(Session)
 def seed():
     reset_db()
 
-    quizlist = [
-        Quiz(name='quiz1', user_id = 1),
-        Quiz(name='quiz2', user_id = 2)
-    ]    
-    questionlist = [
-        Question(question='when did 9/11 happen?', answer='last year'),
-        Question(question='is git a programming language?', answer='yes definitly')
-    ]
-
-    quizquestionlist = [
-        QuizQuestion(quiz_id = 1, question_id = 1),
-        QuizQuestion(quiz_id = 2, question_id = 1),
-        QuizQuestion(quiz_id = 1, question_id = 2),
-        QuizQuestion(quiz_id = 2, question_id = 2) 
-    ]
-
-    answerlist = [
-        Answer(answer='test1', user_id = 1, question_id = 1),
-        Answer(answer='test2', user_id = 1, question_id = 2),
-        Answer(answer='test3', user_id = 2, question_id = 1),
-    ]
-
     userlist = [
-        User(username='max'),
-        User(username='menno'),
-        User(username='robbert')
+        User(username='Max'),
+        User(username='Menno'),
+        User(username='Robert')
     ]
 
     for user in userlist:
         user.hash_password('qwerty')
-    
-    questionlist = [
-        Question(question='when did 9/11 happen?', answer='last year'),
-        Question(question='is git a programming language?', answer='yes definitly')
+
+    quizlist = [
+        Quiz(name='My first time using JavaScript', user_id = 1),
+        Quiz(name='JavaScript functions', user_id = 2)
     ]
+
+    questionlist = [
+        Question(name='Printing', description='Print out Hello World!', answer='Hello World!'),
+        Question(name='Adding up the numbers', description='Use your knowledge to add up the numbers 1 and 2', answer='3'),
+        Question(name='Multiplying numbers', description='Multiply 5 by 4', answer='20')
+    ]
+
+    quizquestionlist = [
+        QuizQuestion(quiz_id = 1, question_id = 1),
+        QuizQuestion(quiz_id = 1, question_id = 2),
+        QuizQuestion(quiz_id = 1, question_id = 3)
+    ]
+
     answerlist = [
-        Answer(answer='test1', user_id = 1, question_id = 1),
-        Answer(answer='test2', user_id = 1, question_id = 1),
-        Answer(answer='test3', user_id = 1, question_id = 2),
+        Answer(input='console.log("Hello World!")', user_id = 1, question_id = 1),
+        Answer(input='1+2', user_id = 1, question_id = 2),
+        Answer(input='5*4', user_id = 1, question_id = 3),
     ]
 
     for user in userlist:
