@@ -1,0 +1,56 @@
+<template>
+    <div class="quizzes">
+        <div class="loading" v-if="loading">
+            Loading...
+        </div>
+        <h2>Quizzes</h2>
+        <table v-if="quizzes" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Creator</th>
+                    <th scope="col">Attend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="quiz in quizzes" :key="quiz.id">
+                    <th scope="row">{{ quiz.id }}</th>
+                    <td>{{ quiz.name }}</td>
+                    <td>{{ quiz.user.first_name }} {{ quiz.user.last_name }}</td>
+                    <td><router-link :to="{ name: 'quiz', params: { id: quiz.id}}">Here</router-link></td>
+                </tr>
+            </tbody>
+        </table>
+        <router-link :to="{ name: 'quiz.create' }">Here</router-link>
+    </div>
+</template>
+
+<script>
+    export default {
+        data () {
+            return {
+                quizzes: null,
+                loading: false
+            }
+        },
+        created () {
+            this.fetchData()
+        },
+        methods: {
+            fetchData () {
+                this.loading = true
+                setTimeout(this.setTimeout, 1000)
+            },
+            setTimeout() {
+                this.loading = false
+                this.quizzes = [
+                    { id: 1, name: "quiz 1", user: { first_name: "menno", last_name: "prinzhorn"}},
+                    { id: 2, name: "quiz 2", user: { first_name: "menno", last_name: "prinzhorn"}},
+                    { id: 3, name: "quiz 3", user: { first_name: "menno", last_name: "prinzhorn"}},
+                    { id: 4, name: "quiz 4", user: { first_name: "menno", last_name: "prinzhorn"}},
+                ]
+            }
+        },
+    }
+</script>
