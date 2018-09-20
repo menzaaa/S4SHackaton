@@ -31,13 +31,13 @@ class Quiz(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE", onupdate="CASCADE"))
 
-class Quiz_questions(db.Model):
+class QuizQuestion(db.Model):
     __tablename__ = 'quiz_questions'
 
     id = db.Column(db.Integer, primary_key=True)
-    quiz_id = db.Column(db.Integer, primary_key=True)
+    quiz_id = db.Column(db.Integer)
     question_id = db.Column(db.Integer)
 
 
@@ -45,6 +45,6 @@ if __name__ == "__main__":
     from sqlalchemy import create_engine
     from settings import DB_URI
     engine = create_engine(DB_URI)
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
+    db.Model.metadata.drop_all(engine)
+    db.Model.metadata.create_all(engine)
     

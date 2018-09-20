@@ -34,7 +34,6 @@ class QuestionListResource(Resource):
     @marshal_with(question_fields)
     def get(self):
         questions = session.query(Question).all()
-        print (questions)
         return questions
 
 
