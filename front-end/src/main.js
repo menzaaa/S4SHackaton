@@ -14,14 +14,23 @@ import Quizzes from './components/quizzes/Quizzes.vue'
 import Quiz from './components/quizzes/Quiz.vue'
 import CreateQuiz from './components/quizzes/Create.vue'
 import Question from './components/questions/Questions.vue';
+import Login from './components/login/Login.vue';
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
+
+Vue.prototype.$current_user = null;
 
 const UserProfile = { template: '<div>profile</div>' }
 const UserPosts   = { template: '<div>posts</div>'}
 
 const routes = [
+  {
+    path: '/',
+    redirect: {
+      name:'login'
+    }
+  },
   {
     path: '/users',
     name: 'users',
@@ -29,6 +38,14 @@ const routes = [
       navigation: NavigationBar,
       main: Users,
     },
+  },
+  {
+    path: '/login',
+    name: 'login',
+    components: {
+      navigation: null,
+      main: Login
+    }
   },
   { 
     path: '/user/:id',

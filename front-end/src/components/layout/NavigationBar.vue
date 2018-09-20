@@ -12,7 +12,31 @@
 			<li class="nav-item active">
 				<router-link :to="{ name: 'quizzes'}" class="nav-link">Quizzes</router-link>
 			</li>
+			<li class="nav-item active">
+				<router-link to='/#/' v-on:click.native="logout()">Logout</router-link>
+			</li>
 		</ul>
 	</div>
 	</nav>
 </template>
+ 
+<script>
+    export default {
+        name: 'App',
+        data() {
+            return {
+                authenticated: false,
+                mockAccount: {
+                    username: "nraboy",
+                    password: "password"
+                }
+            }
+        },
+        methods: {
+            logout() {
+				console.log('loggin out')
+                this.$emit('logout');
+            }
+        }
+    }
+</script>
