@@ -1,5 +1,6 @@
 <template>
     <div class="user">
+        <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
         <div class="loading" v-if="loading">
             Loading...
         </div>
@@ -8,8 +9,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
+                    <th scope="col">username</th>
                     <th scope="col">profile</th>
                 </tr>
             </thead>
@@ -27,6 +27,10 @@
 </template>
 
 <script>
+    const axios = require('axios')
+    const instance = axios.create({
+        baseURL: 'http://localhost:5000/'
+    })
     export default {
         data () {
             return {
@@ -41,7 +45,15 @@
         methods: {
             fetchData () {
                 this.loading = true
-                setTimeout(this.setTimeout, 1000)
+                const axios = require('axios')
+                instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('test' + ':' + 'test');
+                const that = this
+                instance.get('/users')
+                    .then(function (response) {
+                        console.log(response);
+                        that.users = response.data
+                        that.loading = false
+                    });
             },
             setTimeout() {
                 this.loading = false
