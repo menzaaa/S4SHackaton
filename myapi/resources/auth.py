@@ -14,7 +14,7 @@ auth = HTTPBasicAuth()
 def verify_password(username_or_token, password):
     user = User.verify_auth_token(username_or_token)
     if not user:
-        user = session.query(User).filter_by(username = username_or_token).first()
+        user = session.query(User).filter_by(first_name = username_or_token).first()
         if not user or not user.verify_password(password):
             print("Nee man")
             return False
@@ -41,8 +41,8 @@ def get(self):
 def self_only(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if kwargs.get('username', None):
-            if g.user.username != kwargs['username']:
+        if kwargs.get('first_name', None):
+            if g.user.first_name != kwargs['first_name']:
                 abort(403)
         if kwargs.get('user_id', None):
             if g.user.id != kwargs['user_id']:

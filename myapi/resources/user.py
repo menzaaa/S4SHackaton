@@ -13,7 +13,8 @@ from resources.auth import auth
 
 user_fields = {
     'id': fields.Integer,
-    'username': fields.String,
+    'first_name': fields.String,
+    'last_name': fields.String,
     'password_hash': fields.String,
     'uri': fields.Url('user', absolute=True),
 }
@@ -26,14 +27,16 @@ answer_fields = {
 
 user_answers = {
     'id': fields.Integer,
-    'username': fields.String,
+    'first_name': fields.String,
+    'last_name': fields.String,
     'answers': fields.List(fields.Nested(answer_fields))
 }
 
 users = {}
 
 parser = reqparse.RequestParser()
-parser.add_argument('username', type=str)
+parser.add_argument('first_name', type=str)
+parser.add_argument('last_name', type=str)
 parser.add_argument('password', type=str)
 
 class UserResource(Resource):
@@ -48,6 +51,7 @@ class UserResource(Resource):
 
     @self_only
     @auth.login_required
+    
     @marshal_with(user_fields)
     def get(self, id):
         user = session.query(User).filter(User.id == id).first()
@@ -87,7 +91,7 @@ class UserListResource(Resource):
     @marshal_with(user_fields)
     def post(self):
         parsed_args = parser.parse_args()
-        user = User(username=parsed_args['username'])
+        user = User(first_name=parsed_args['first_name'], last_name=parsed_args['last_name'])
         user.hash_password(parsed_args['password'])
         session.add(user)
         session.commit()
@@ -101,7 +105,8 @@ class UserAnswersResource(Resource):
 
         d = dict()
         d['id'] = user.id
-        d['name'] = user.username
+        d['first_name'] = user.first_name 
+        d['last_name'] = user.last_name
         d['answers'] = answers        
 
         return d

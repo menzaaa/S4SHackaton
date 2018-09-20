@@ -11,6 +11,7 @@ from resources import auth
 
 app = Flask(__name__)
 CORS(app)
+app.config['APPLICATION_ROOT'] = '/api'
 
 app.config['SECRET_KEY'] = 'geheime code'
 
@@ -31,4 +32,4 @@ api.add_resource(QuizOverviewResource, '/quizzes/<string:id>/questions', endpoin
 api.add_resource(QuizListResource, '/quizzes', endpoint = 'quizzes')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run('localhost', 8080, debug=True)

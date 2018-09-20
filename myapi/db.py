@@ -13,9 +13,9 @@ def seed():
     reset_db()
 
     userlist = [
-        User(username='Max'),
-        User(username='Menno'),
-        User(username='Robert')
+        User(first_name='Max', last_name='HvA'),
+        User(first_name='Menno', last_name='HvA'),
+        User(first_name='Robert', last_name='HvA')
     ]
 
     for user in userlist:
