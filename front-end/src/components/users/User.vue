@@ -38,7 +38,6 @@
 			fetchData () {
 				this.error = this.post = null
 				this.loading = true
-				const axios = require('axios')
 				instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('max' + ':' + 'qwerty');
 				const that = this
 				instance.get('/users/' + this.$route.params.id )

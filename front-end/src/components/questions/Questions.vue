@@ -14,6 +14,11 @@
     </div>
 </template>
 <script>
+    const axios = require('axios')
+	const instance = axios.create({
+		baseURL: 'http://localhost:5000/'
+    })
+    
     export default {
         data () {
             return {
@@ -27,7 +32,16 @@
         methods: {
             fetchData () {
                 this.loading = true
-                setTimeout(this.setTimeout, 1000)
+                this.loading = true
+				instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('max' + ':' + 'qwerty');
+				const that = this
+				instance.get('/questions/' + this.$route.params.id )
+					.then(function (response) {
+						console.log(response);
+						that.question = response.data
+						that.loading = false
+					});
+                // setTimeout(this.setTimeout, 1000)
             },
             setTimeout() {
                 this.loading = false

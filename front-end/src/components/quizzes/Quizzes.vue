@@ -9,7 +9,6 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Creator</th>
                     <th scope="col">Attend</th>
                     <th scope="col">Edit</th>
                 </tr>
@@ -18,7 +17,6 @@
                 <tr v-for="quiz in quizzes" :key="quiz.id">
                     <th scope="row">{{ quiz.id }}</th>
                     <td>{{ quiz.name }}</td>
-                    <td>{{ quiz.user.first_name }} {{ quiz.user.last_name }}</td>
                     <td><router-link :to="{ name: 'quiz', params: { id: quiz.id}}">Here</router-link></td>
                     <td><router-link :to="{ name: 'quiz.edit', params: { id: quiz.id}}">Here</router-link></td>
                 </tr>
@@ -29,6 +27,11 @@
 </template>
 
 <script>
+    const axios = require('axios')
+	const instance = axios.create({
+		baseURL: 'http://localhost:5000/'
+    })
+    
     export default {
         data () {
             return {
@@ -42,7 +45,15 @@
         methods: {
             fetchData () {
                 this.loading = true
-                setTimeout(this.setTimeout, 1000)
+                instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('max' + ':' + 'qwerty');
+				const that = this
+				instance.get('/quizzes' )
+					.then(function (response) {
+						console.log(response);
+						that.quizzes = response.data
+						that.loading = false
+					});
+                // setTimeout(this.setTimeout, 1000)
             },
             setTimeout() {
                 this.loading = false
