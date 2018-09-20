@@ -1,13 +1,20 @@
 from models import User, Answer
 from db import session
 
-from flask import Flask, request
+from flask import Flask, request, g
 from flask_restful import Resource, reqparse, fields, marshal_with, abort
+
+from resources.auth import self_only
+
+# from flask_httpauth import HTTPBasicAuth
+
+from resources.auth import auth
+# auth = HTTPBasicAuth()
 
 user_fields = {
     'id': fields.Integer,
     'username': fields.String,
-    'password': fields.String,
+    'password_hash': fields.String,
     'uri': fields.Url('user', absolute=True),
 }
 
@@ -20,9 +27,21 @@ answer_fields = {
 users = {}
 
 parser = reqparse.RequestParser()
-parser.add_argument('task', type=str)
+parser.add_argument('username', type=str)
+parser.add_argument('password', type=str)
 
 class UserResource(Resource):
+    # @auth.verify_password
+    # def verify_password(username, password):
+    #     user = session.query(User).filter_by(username = username).first()
+    #     if not user or not user.verify_password(password):
+    #         print("Nee man")
+    #         return False
+    #     g.user = user
+    #     return True
+
+    @self_only
+    @auth.login_required
     @marshal_with(user_fields)
     def get(self, id):
         user = session.query(User).filter(User.id == id).first()
