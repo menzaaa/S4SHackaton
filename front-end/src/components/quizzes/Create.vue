@@ -68,7 +68,7 @@
 						that.user = response.data
 						that.loading = false
 					});
-                alert('Quiz aangemaakt');
+                // alert('Quiz aangemaakt');
                 this.$router.push({ name: 'quizzes'})
             }
         },
