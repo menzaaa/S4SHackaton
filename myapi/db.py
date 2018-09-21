@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from settings import DB_URI
-from models import User, Answer, Question, Quiz, QuizQuestion, reset_db
+from models import User, Answer, Question, Quiz, reset_db
 
 Session = sessionmaker(autocommit=False,
                        autoflush=False,
@@ -27,15 +27,9 @@ def seed():
     ]
 
     questionlist = [
-        Question(name='Printing', description='Print out Hello World!', answer='Hello World!'),
-        Question(name='Adding up the numbers', description='Use your knowledge to add up the numbers 1 and 2', answer='3'),
-        Question(name='Multiplying numbers', description='Multiply 5 by 4', answer='20')
-    ]
-
-    quizquestionlist = [
-        QuizQuestion(quiz_id = 1, question_id = 1),
-        QuizQuestion(quiz_id = 1, question_id = 2),
-        QuizQuestion(quiz_id = 1, question_id = 3)
+        Question(name='Printing', description='Print out Hello World!', answer='Hello World!', quiz_id = 1),
+        Question(name='Adding up the numbers', description='Use your knowledge to add up the numbers 1 and 2', answer='3', quiz_id = 1),
+        Question(name='Multiplying numbers', description='Multiply 5 by 4', answer='20', quiz_id = 1)
     ]
 
     answerlist = [
@@ -56,11 +50,6 @@ def seed():
 
     for question in questionlist:
         session.add(question)
-
-    session.commit()
-
-    for quizquestion in quizquestionlist:
-        session.add(quizquestion)
 
     session.commit()
 

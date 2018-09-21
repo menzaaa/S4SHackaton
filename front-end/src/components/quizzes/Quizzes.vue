@@ -24,7 +24,7 @@
                 </tr>
             </tbody>
         </table>
-        <router-link :to="{ name: 'quiz.create' }">Here</router-link>
+        <router-link :to="{ name: 'quiz.create' }">Create quiz</router-link>
     </div>
 </template>
 

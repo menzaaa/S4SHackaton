@@ -1,4 +1,4 @@
-from models import Quiz, Question, QuizQuestion
+from models import Quiz, Question
 from db import session
 
 from flask import Flask, request
@@ -29,7 +29,7 @@ quizzes = {}
 
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=str)
-parser.add_argument(    'user_id', type=int)
+parser.add_argument('user_id', type=int)
 
 class QuizResource(Resource):
     @marshal_with(quiz_questions)
@@ -38,8 +38,7 @@ class QuizResource(Resource):
         if not quiz:
             abort(404, message="Quiz {} does not exist.".format(id))
 
-        quiz_question_ids = session.query(QuizQuestion.question_id).filter(QuizQuestion.quiz_id == quiz.id)
-        questions = session.query(Question).filter(Question.id.in_(quiz_question_ids)).all()
+        questions = session.query(Question).filter(Question.quiz_id == quiz.id).all()
         
         d = dict()
         d['id'] = quiz.id

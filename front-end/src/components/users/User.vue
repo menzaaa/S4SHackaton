@@ -5,11 +5,23 @@
 		</div>
 		<div v-if="error" class="error">
 			{{ error }}
-		</div>
-		<h2>User {{ $route.params.id }}</h2>
-		<div class="test" v-if="user">
-			<p>{{ user.first_name }} | {{ user.last_name}}</p>
-		</div>
+		</div>	
+		<div class="row justify-content-center">
+            <div class="col col-lg-8">
+                <div v-if="user" class="card">
+                    <div class="card-header">
+						{{ user.first_name }} {{ user.last_name }}
+					</div>
+					<div class="card-block">
+						<h4 class="card-title">About</h4>
+						<p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+					</div>
+					<div class="card-footer text-muted">
+						Last active: 2 days ago
+					</div>
+                </div>
+            </div>
+        </div>
 		<router-view></router-view>
 	</div>
 </template>

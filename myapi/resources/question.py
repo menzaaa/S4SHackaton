@@ -6,15 +6,17 @@ from flask_restful import Resource, reqparse, fields, marshal_with, abort
 
 question_fields = {
     'id': fields.Integer,
-    'question': fields.String,
+    'name': fields.String,
     'description': fields.String,
-    'answer': fields.String
+    'answer': fields.String,
+    'quiz_id': fields.Integer
 }
 
 answer_fields = {
     'id': fields.Integer,
     'input': fields.String,
-    'user_id': fields.Integer
+    'user_id': fields.Integer,
+    'question_id': fields.Integer
 }
 
 questions = {}
@@ -23,6 +25,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('name', type=str)
 parser.add_argument('description', type=str)
 parser.add_argument('answer', type=str)
+parser.add_argument('quiz_id', type=int)
 
 class QuestionResource(Resource):
     @marshal_with(question_fields)
@@ -59,7 +62,11 @@ class QuestionListResource(Resource):
     @marshal_with(question_fields)
     def post(self):
         parsed_args = parser.parse_args()
-        question = Question(question=parsed_args['question'], answer=parsed_args['answer'])
+        question = Question(name=parsed_args['name'],
+                            description=parsed_args['description'],
+                            answer=parsed_args['answer'],
+                            quiz_id=parsed_args['quiz_id']
+                            )
         
         session.add(question)
         session.commit()
