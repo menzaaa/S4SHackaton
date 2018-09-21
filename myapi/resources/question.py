@@ -8,7 +8,8 @@ question_fields = {
     'id': fields.Integer,
     'name': fields.String,
     'description': fields.String,
-    'answer': fields.String
+    'answer': fields.String,
+    'quiz_id': fields.Integer
 }
 
 answer_fields = {
@@ -24,6 +25,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('name', type=str)
 parser.add_argument('description', type=str)
 parser.add_argument('answer', type=str)
+parser.add_argument('quiz_id', type=int)
 
 class QuestionResource(Resource):
     @marshal_with(question_fields)
@@ -62,7 +64,8 @@ class QuestionListResource(Resource):
         parsed_args = parser.parse_args()
         question = Question(name=parsed_args['name'],
                             description=parsed_args['description'],
-                            answer=parsed_args['answer']
+                            answer=parsed_args['answer'],
+                            quiz_id=parsed_args['quiz_id']
                             )
         
         session.add(question)

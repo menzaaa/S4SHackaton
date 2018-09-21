@@ -57,6 +57,6 @@ class AnswerListResource(Resource):
                         question_id=parsed_args['question_id']
                         )
         
-        session.add(question)
+        session.add(answer)
         session.commit()
         return answer, 201

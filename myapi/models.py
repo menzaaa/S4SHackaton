@@ -55,6 +55,7 @@ class Question(db.Model):
     name = db.Column(db.String(255))
     description = db.Column(db.String(255))
     answer = db.Column(db.String(255))
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quizzes.id', ondelete="CASCADE", onupdate="CASCADE"))
 
 class Answer(db.Model):
     __tablename__ = 'answers'
@@ -70,13 +71,6 @@ class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE", onupdate="CASCADE"))
-
-class QuizQuestion(db.Model):
-    __tablename__ = 'quiz_questions'
-
-    id = db.Column(db.Integer, primary_key=True)
-    quiz_id = db.Column(db.Integer)
-    question_id = db.Column(db.Integer)
 
 def reset_db():
     from sqlalchemy import create_engine
