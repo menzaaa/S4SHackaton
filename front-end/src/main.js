@@ -24,6 +24,14 @@ const UserPosts   = { template: '<div>posts</div>'}
 
 const routes = [
   {
+    path: '/',
+    name: 'quizzes',
+    components: {
+      navigation: NavigationBar,
+      main: Quizzes
+    },
+  },
+  {
     path: '/users',
     name: 'users',
     components: {

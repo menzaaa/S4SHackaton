@@ -49,8 +49,8 @@ class UserResource(Resource):
     #     g.user = user
     #     return True
 
-    @self_only
-    @auth.login_required
+    # @self_only
+    # @auth.login_required
     
     @marshal_with(user_fields)
     def get(self, id):
