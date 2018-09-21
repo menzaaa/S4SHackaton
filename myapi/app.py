@@ -6,6 +6,7 @@ from flask_cors import CORS
 from resources.user import UserResource, UserListResource, UserAnswersResource
 from resources.question import QuestionResource, QuestionListResource, QuestionAnswersResource
 from resources.quiz import QuizResource, QuizListResource
+from resources.answer import AnswerResource, AnswerListResource
 from resources.login import LoginResource
 from resources import auth
 
@@ -29,6 +30,9 @@ api.add_resource(QuestionAnswersResource, '/questions/<string:id>/answers', endp
 
 api.add_resource(QuizResource, '/quizzes/<string:id>', endpoint='quiz')
 api.add_resource(QuizListResource, '/quizzes', endpoint = 'quizzes')
+
+api.add_resource(AnswerResource, '/answers/<string:id>', endpoint='answer')
+api.add_resource(AnswerListResource, '/answers', endpoint='answers')
 
 if __name__ == '__main__':
     app.run(debug=True)
