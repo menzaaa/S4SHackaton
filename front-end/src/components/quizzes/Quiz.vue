@@ -18,8 +18,7 @@
                     <th scope="row">{{ question.id }}</th>
                     <td>{{ question.name }}</td>
                     <td>{{ question.description }}</td>
-                    <td v-if="question.answer">"Answered"</td>
-                    <td v-else><router-link :to="{ name: 'questions', params: { id: question.id}}">Here</router-link></td>
+                    <td><router-link :to="{ name: 'questions', params: { id: question.id}}">Here</router-link></td>
                 </tr>
             </tbody>
         </table>
@@ -27,6 +26,10 @@
 </template>
 
 <script>
+    const axios = require('axios')
+	const instance = axios.create({
+		baseURL: 'http://localhost:5000/'
+	})
     export default {
         data () {
             return {
@@ -40,7 +43,16 @@
         methods: {
             fetchData () {
                 this.loading = true
-                setTimeout(this.setTimeout, 1000)
+                this.loading = true
+				instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('max' + ':' + 'qwerty');
+				const that = this
+				instance.get('/quizzes/' + this.$route.params.id )
+					.then(function (response) {
+						console.log(response);
+						that.quiz = response.data
+						that.loading = false
+					});
+                // setTimeout(this.setTimeout, 1000)
             },
             setTimeout() {
                 this.loading = false

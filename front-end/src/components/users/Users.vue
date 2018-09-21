@@ -9,8 +9,9 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">username</th>
-                    <th scope="col">profile</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Profile</th>
                 </tr>
             </thead>
             <tbody>

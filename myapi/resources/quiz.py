@@ -20,7 +20,10 @@ quiz_questions = {
 quiz_fields = {
     'id': fields.Integer,
     'name': fields.String,
+    'creator': fields.Arbitrary
 }
+
+
 
 quizzes = {}
 
@@ -59,8 +62,11 @@ class QuizResource(Resource):
 
     def delete(self, id):
         quiz = session.query(Quiz).filter(Quiz.id == id).first()
+        if not quiz:
+            abort(404, message="Quiz {} does not exist".format(id))
         session.delete(quiz)
         session.commit()
+        return {}, 204
         
 class QuizListResource(Resource):
     @marshal_with(quiz_fields)
