@@ -27,13 +27,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="question in quiz.questions" :key="question.id">
+                            <tr v-for="question in quiz.questions" :key="question.id" v-bind:data-quiz-id="question.id">
                                 <th scope="row">{{ question.id }}</th>
                                 <td>{{ question.name }}</td>
                                 <td>{{ question.description }}</td>
                                 <td>{{ question.answer }}</td>
                                 <td><router-link :to="{ name: 'quiz', params: { id: quiz.id}}">Here</router-link></td>
-                                <td><a href="#" class="remove-question">Here</a></td>
+                                <td><button v-on:click='removeQuestion(question.id)'>Delete</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -157,13 +157,23 @@ export default {
     },
     editQuiz() {
       //doe api call
-      alert("Quiz aangepast");
-      this.$router.push({ name: "quizzes" });
+    //   alert("Quiz aangepast");
+    //   this.$router.push({ name: "quizzes" });
     },
-    removeQuestion() {
-      //doe api call
-      alert("Question removed");
-      this.$router.push({ name: "quizzes" });
+    removeQuestion(id) {
+        const axios = require('axios')
+        instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('max' + ':' + 'qwerty');
+        const that = this
+        var a = document.querySelector('tr[data-quiz-id="' + id +'"]');
+        console.log(a);
+        instance.delete('/questions/' + id )
+            .then(function (response) {
+                console.log(response);
+                // var a = document.querySelector('a[data-quiz-id="1"]');
+                // console.log(a);
+                a.remove();
+            });
+        // axios.delete('/quiz/' + id)
     }
   }
 };
