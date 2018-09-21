@@ -54,7 +54,6 @@
 				const that = this
 				instance.get('/users/' + this.$route.params.id )
 					.then(function (response) {
-						console.log(response);
 						that.user = response.data
 						that.loading = false
 					});

@@ -7,7 +7,7 @@
             <label for="script-input">{{ question.name }}</label>
             <p>{{ question.description }}</p>
             <pre>
-                <textarea class="form-control" id="script-input" rows="20"></textarea>
+                <textarea class="form-control" id="script-input" rows="20">return "";</textarea>
             </pre>
         </div>
         <button v-on:click="compileScript" type="button" class="btn btn-primary">Opslaan</button>
@@ -32,7 +32,6 @@
         methods: {
             fetchData () {
                 this.loading = true
-                this.loading = true
 				instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('max' + ':' + 'qwerty');
 				const that = this
 				instance.get('/questions/' + this.$route.params.id )
@@ -56,17 +55,32 @@
                 const script = document.querySelector('#script-input').value
                 var fn = Function(script)
                 if(fn() == this.question.answer){
-                    this.showResult(true)
+                    this.showResult(true, fn())
                 }else {
-                    this.showResult(false)
+                    this.showResult(false, fn())
                 }
             },
-            showResult(passed) {
+            showResult(passed, output) {
                 if(passed){
-                    alert('Correcto');
+                    alert('Correcto, je ouput is: ' + output);
+                    this.createQuiz(output);
                 }else {
                     alert('Niet correcto');
                 }
+            },
+            createQuiz(output) {
+                instance.defaults.headers.common['Authorization'] = 'Basic ' + btoa('max' + ':' + 'qwerty');
+				const that = this
+				instance.post('/answers', {
+					input: output,
+                    user_id: 1,
+                    question_id: this.$route.params.id
+				} )
+					.then(function (response) {
+						that.$router.go(-1)
+						// that.user = response.data
+						// that.loading = false
+					});
             }
         }
     }
